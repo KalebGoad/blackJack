@@ -228,20 +228,37 @@ async function stand() {
             }
         if (sumDealer > 21) {
             messageDealer = "Dealer BUSTS! Nice win!"
+            startEl.hidden = true;
+            newEl.hidden = true;
+            standEl.hidden = true;
+            player.chips = player.chips + Number(quantity.value)
         }
         else if (sumDealer > sum && sumDealer <=21) {
             messageDealer = "I won this round! Please place your wager to play the next round." 
+            startEl.hidden = true;
+            newEl.hidden = true;
+            standEl.hidden = true;
+            player.chips = player.chips - Number(quantity.value)
         }
 
         else if (sumDealer < sum) {
             messageDealer = "Congrats! You won this round!"
+            startEl.hidden = true;
+            newEl.hidden = true;
+            standEl.hidden = true;
+            player.chips = player.chips + Number(quantity.value)
         }
         
         else if (sumDealer === sum) {
             messageDealer = "We TIED, however, I still WIN!"
+            startEl.hidden = true;
+            newEl.hidden = true;
+            standEl.hidden = true;
+            player.chips = player.chips - Number(quantity.value)
         }
 
         messageEl.textContent = messageDealer
+        playerEl.textContent = player.name + ": $" + player.chips
     }
     
 
