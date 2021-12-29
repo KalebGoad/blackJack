@@ -165,6 +165,7 @@ function renderGame() {
 
 
     sumEl.textContent = "Sum: " + sum
+    sumDealerEl.textContent = "Sum: " + sumDealer
     if (sum <= 20) {
         message = "Do you want to draw a new card? 😁"
 
@@ -222,7 +223,7 @@ async function stand() {
             dealerCards.push(card)
             // cardsDealerEl.textContent = cardsDealerEl.textContent + " " + card
             renderGame();
-            sumDealerEl.textContent = "Sum: " + sumDealer
+            // sumDealerEl.textContent = "Sum: " + sumDealer
             await sleep(1000)
             }
         if (sumDealer > 21) {
