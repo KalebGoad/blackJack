@@ -90,7 +90,7 @@ playerEl.textContent = player.name + ": $" + player.chips
 
 
 function getRandomCard() {
-    let randomNumber = Math.floor(Math.random()*51 ) + 1 // goes through deck 
+    let randomNumber = Math.floor(Math.random()*52 ) + 1 // goes through deck 
     return randomNumber
 }
 
