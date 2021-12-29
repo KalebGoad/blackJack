@@ -92,18 +92,8 @@ playerEl.textContent = player.name + ": $" + player.chips
 
 function getRandomCard() {
     // if 1   -> return 11
-    let randomNumber = Math.floor(Math.random()*52 ) + 1 // goes through deck 
-    
-    if (randomNumber%13 > 10 || randomNumber%13 === 0) {
-        sum+= 10
-    } else if (randomNumber%13 === 1) {
-        if(sum >= 11) {
-         sum+= 1
-        } else {
-            sum+= 11
-        }
-    } 
-return randomNumber
+    let randomNumber = Math.floor(Math.random()*51 ) + 1 // goes through deck 
+    return randomNumber
 }
 
 
@@ -115,13 +105,36 @@ function chipsWager() {
     
 }
 
-function startGame() {
+function sumUp(sum, x) {
     
+    if (x%13 >= 10 || x%13 === 0) {
+        sum += 10
+    } else if (x%13 === 1) {
+        if(sum >= 11) {
+            sum += 1
+        } else {
+            sum += 11
+        }
+    } else {
+        sum += x%13
+    }
+    return sum
+}
+
+function startGame() {
+    sum = 0
     isAlive = true
     let firstCard = getRandomCard()
     let secondCard = getRandomCard()
+    console.log(firstCard)
+    console.log(secondCard)
     cards = [firstCard, secondCard]
     // sum = firstCard%13 + secondCard%13
+    console.log(sum)
+    sum = sumUp(sum, firstCard)
+    console.log(sum)
+    sum = sumUp(sum, secondCard)
+    console.log(sum)
     let firstDealerCard = getRandomCard() 
     dealerCards = [firstDealerCard]
     sumDealer = firstDealerCard
@@ -134,9 +147,9 @@ function startGame() {
 function renderGame() {
     document.querySelectorAll("#deck img").forEach((element) => element.remove())
     cardsEl.textContent = "Cards: "
-    for (let i = 0; i < cards.length; i++) {
-        cardsEl.textContent += cards[i]%13 + " "
-    }
+    // for (let i = 0; i < cards.length; i++) {
+    //     cardsEl.textContent += cards[i]%13 + " "
+    // }
     for (let i = 0; i < cards.length; i++) {
         let img = document.createElement('img');
         img.src = deck[cards[i]];
@@ -187,6 +200,7 @@ function newCard() {
         let card = getRandomCard()
         console.log(card)
         // sum += card%13
+        sum = sumUp(sum, card)
         console.log(sum)
         cards.push(card)
         console.log(cards)
