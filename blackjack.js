@@ -2,6 +2,8 @@ let player = {
     name: "Chips",
     chips:  200
 }
+
+// cards' image source: https://github.com/hayeah/playing-cards-assets
 const deck = {
     1 : "./assets/ace_of_spades.png",
     2 : "./assets/2_of_spades.png",
