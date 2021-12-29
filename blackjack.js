@@ -68,7 +68,6 @@ let message = ""
 let messageDealer = ""
 let messageEl = document.getElementById("message-el")
 let sumEl = document.getElementById("sum-el")
-let cardsEl = document.getElementById("cards-el")
 let newEl = document.getElementById("new-el")
 let playerEl = document.getElementById("player-el")
 let startEl = document.getElementById("start-el")
@@ -77,8 +76,6 @@ let quantity = document.getElementById("quantity")
 let chipsEl = document.getElementById("chips-el")
 
 let dealerEl = document.getElementById("dealer-el")
-let dealerMessageEl = document.getElementById("message-dealer")
-let cardsDealerEl = document.getElementById("cards-dealer")
 let sumDealerEl = document.getElementById("sum-dealer")
 
 
@@ -123,6 +120,7 @@ function sumUp(sum, x) {
 
 function startGame() {
     sum = 0
+    sumDealer = 0
     isAlive = true
     let firstCard = getRandomCard()
     let secondCard = getRandomCard()
@@ -137,7 +135,8 @@ function startGame() {
     console.log(sum)
     let firstDealerCard = getRandomCard() 
     dealerCards = [firstDealerCard]
-    sumDealer = firstDealerCard
+    // sumDealer = firstDealerCard
+    sumDealer = sumUp(sumDealer, firstDealerCard)
     renderGame()
 
     startEl.textContent = "START GAME"
@@ -145,21 +144,23 @@ function startGame() {
 }
 
 function renderGame() {
-    document.querySelectorAll("#deck img").forEach((element) => element.remove())
-    cardsEl.textContent = "Cards: "
+    document.querySelectorAll("#hand img").forEach((element) => element.remove())
+    
     // for (let i = 0; i < cards.length; i++) {
     //     cardsEl.textContent += cards[i]%13 + " "
     // }
     for (let i = 0; i < cards.length; i++) {
         let img = document.createElement('img');
         img.src = deck[cards[i]];
-        document.querySelector("#deck").appendChild(img);
+        document.querySelector("#hand").appendChild(img);
 
     }
-
-    cardsDealerEl.textContent = "Cards: "
+    document.querySelectorAll("#handDealer img").forEach((element) => element.remove())
+    
     for (let i = 0; i < dealerCards.length; i++) {
-        cardsDealerEl.textContent += dealerCards[i] + " "
+        let img = document.createElement('img');
+        img.src = deck[dealerCards[i]];
+        document.querySelector("#handDealer").appendChild(img);
     }
 
 
@@ -217,9 +218,10 @@ const sleep = (milliseconds) => {
 async function stand() {
         while (sumDealer < 17) {
             let card = getRandomCard()
-            sumDealer += card
+            sumDealer = sumUp(sumDealer, card)
             dealerCards.push(card)
-            cardsDealerEl.textContent = cardsDealerEl.textContent + " " + card
+            // cardsDealerEl.textContent = cardsDealerEl.textContent + " " + card
+            renderGame();
             sumDealerEl.textContent = "Sum: " + sumDealer
             await sleep(1000)
             }
@@ -238,7 +240,7 @@ async function stand() {
             messageDealer = "We TIED, however, I still WIN!"
         }
 
-        dealerMessageEl.textContent = messageDealer
+        messageEl.textContent = messageDealer
     }
     
 

@@ -11,7 +11,7 @@
     <body>
         <h1>BlackJack</h1>
         <p id="message-el">Want to play a round? Select a wager amount to begin.</p>
-        <div id="deck"><p id="cards-el">Cards:</p></div>
+        <div id="hand"></div>
         <p id="sum-el">Sum:</p>
         <button id="start-el" onclick="startGame()" >START GAME</button>
         <button id="new-el" onclick="newCard()">HIT</button>
@@ -21,9 +21,9 @@
         <input type="number" id="quantity" name="quantity" value="5" min="5" max="200" step="5">
         <br>
         <p id="dealer-el">Dealer:</p>
-        <p id="cards-dealer">Cards:</p>
         <p id="sum-dealer">Sum:</p>
-        <p id="message-dealer"></p>
+        <div id="handDealer"></div>
+        <!-- <p id="message-dealer"></p> -->
         <script src="blackjack.js"></script> 
     </body>
 </html>

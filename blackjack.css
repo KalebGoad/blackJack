@@ -3,26 +3,48 @@ body {
     background-image: url("./assets/table2.jpg");
     background-size: cover;
     text-align: center;
+    margin-bottom: 0px;
+    margin-top: 0px;
     color: white;
     font-weight: bold;
 }
 
 h1 {
     color: #daa520;
+    margin-bottom: 0px;
+    margin-top: 0px;
 }
 
-#deck img {
+#hand img {
     width: 120px;
-    height: 120px;
+    height: 110px;
     padding: 10px;
     background-color: rgb(50, 202, 207);
     margin: 5px;
+    margin-bottom: 0px;
+    margin-top: 0px;
     border: 5px;
     border-style: outset solid;
-    border-radius: 10px;
+    border-radius: 7px;
     
 }
+#handDealer img {
+    width: 120px;
+    height: 110px;
+    padding: 10px;
+    background-color: rgb(213, 216, 51);
+    margin: 5px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    border: 5px;
+    border-style: outset solid;
+    border-radius: 7px;
+}
 
+#sum-dealer,
+#dealer-el {
+    display: inline-block;
+}
 #message-el {
     font-style: italic;
 }
