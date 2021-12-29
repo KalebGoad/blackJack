@@ -97,8 +97,7 @@ function getRandomCard() {
 
 function chipsWager() {
     startEl.hidden = false;
-    newEl.hidden = false;
-    standEl.hidden = false;
+    
     chipsEl.hidden = true;
     quantity.hidden = true;
     playerEl.textContent += "  |  " + "Bet: " + quantity.value
@@ -136,9 +135,12 @@ function startGame() {
     let firstDealerCard = getRandomCard() 
     dealerCards = [firstDealerCard]
     sumDealer = sumUp(sumDealer, firstDealerCard)
+    startEl.hidden = true
+    newEl.hidden = false;
+    standEl.hidden = false;
     renderGame()
 
-    startEl.textContent = "START GAME"
+    startEl.textContent = "DEAL"
 
 }
 
@@ -168,13 +170,13 @@ function renderGame() {
         endRound()
         player.chips = player.chips + Number(quantity.value)
         playerEl.textContent = player.name + ": $" + player.chips
-        startEl.textContent = "RESTART GAME"
+        startEl.textContent = "REDEAL"
     } else {
         message = "Busted! You lose this round! 😭 Select a new wager amount to begin next round."
         endRound()
         player.chips = player.chips - Number(quantity.value)
         playerEl.textContent = player.name + ": $" + player.chips
-        startEl.textContent = "RESTART GAME"
+        startEl.textContent = "REDEAL"
         
     }
 
