@@ -101,7 +101,6 @@ function colorToggle() {
     if (bet.getAttribute("class") == "input-error") {
         bet.setAttribute("class", "")
         bet.value = ""
-        console.log("removed class ", bet.getAttribute("class"))
     }
 }
 
