@@ -15,11 +15,17 @@ h1 {
     margin-top: 0px;
 }
 
+#amount {
+    font-style: bold, italic;
+    font-size: 22px;
+    color: #daa520;
+}
+
 #hand img {
     width: 120px;
     height: 110px;
     padding: 10px;
-    background-color: rgb(50, 202, 207);
+    background-color: rgb(132, 244, 248);
     margin: 5px;
     margin-bottom: 0px;
     margin-top: 0px;
@@ -32,7 +38,7 @@ h1 {
     width: 120px;
     height: 110px;
     padding: 10px;
-    background-color: rgb(213, 216, 51);
+    background-color: rgb(216, 218, 112);
     margin: 5px;
     margin-bottom: 0px;
     margin-top: 0px;
@@ -42,12 +48,86 @@ h1 {
 }
 
 #sum-dealer,
+#player-el,
+#sum-el,
 #dealer-el {
     display: inline-block;
 }
 #message-el {
     font-style: italic;
+    font-size: 24px;
 }
+#start-el,
+#new-el,
+#stand-el,
+#chips-el {
+    margin-bottom: 12px;
+    border-radius: 8px;
+    box-shadow: 0px 3px 0px 0px #222121, inset -1px -3px 10px 1px #515151;
+}
+
+#start-el:hover,
+#new-el:hover,
+#stand-el:hover,
+#chips-el:hover {
+    margin-bottom: 12px;
+    border-radius: 8px;
+    opacity: 1;
+    box-shadow: 0px 3px 0px 0px #222121, inset -1px -3px 10px 1px #515151;
+    
+}
+
+#chips-el:hover {
+    color: #8a0803b6;
+    box-shadow: 0px 2px 0px 0px #222121, inset -1px -3px 6px 1px #515151;
+
+}
+
+#chips-el:active {
+    color: #8a0803b6;
+    background-color: #ecb677ee;
+    box-shadow: 0px 0px 0px 0px #222121, inset -1px -3px 2px 1px #515151;
+
+}
+
+#start-el:hover {
+    box-shadow: 0px 3px 0px 0px #222121, inset -1px -3px 10px 1px #515151;
+    color: rgb(49, 84, 240);
+}
+
+#start-el:active {
+    transform: translate(-1px, 1px);
+    box-shadow: none;
+    color: rgb(49, 84, 240);
+    background-color: #ecb677ee;
+}
+
+#new-el {
+    background: rgb(219, 221, 243);
+    color:rgb(235, 8, 8);
+}
+
+#new-el:hover {
+    box-shadow: 0px 2px 0px 0px #222121, inset -1px -3px 8px 1px #515151;
+    color: rgb(156, 5, 5);
+    opacity: .9;
+}
+
+#new-el:active {
+    box-shadow: none;
+    background-color: #ecb677ee;}
+
+#stand-el:hover {
+    box-shadow: 0px 2px 0px 0px #222121, inset -1px -3px 8px 1px #515151;
+    color: rgb(102, 5, 141);
+}
+
+#stand-el:active {
+    box-shadow: none;
+    color: rgb(102, 5, 141);
+    background-color: #ecb677ee;
+}
+
 
 button {
     color: #016f32;

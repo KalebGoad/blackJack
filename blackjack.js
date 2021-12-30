@@ -74,11 +74,13 @@ let newEl = document.getElementById("new-el")
 let playerEl = document.getElementById("player-el")
 let startEl = document.getElementById("start-el")
 let standEl = document.getElementById("stand-el")
-let quantity = document.getElementById("quantity")
+let bet = document.getElementById("quantity")
 let chipsEl = document.getElementById("chips-el")
 
 let dealerEl = document.getElementById("dealer-el")
 let sumDealerEl = document.getElementById("sum-dealer")
+
+let hasAce = false;
 
 
 startEl.hidden = true;
@@ -90,18 +92,28 @@ playerEl.textContent = player.name + ": $" + player.chips
 
 
 function getRandomCard() {
-    // if 1   -> return 11
-    let randomNumber = Math.floor(Math.random()*51 ) + 1 // goes through deck 
+    let randomNumber = Math.floor(Math.random()*52 ) + 1 // goes through deck 
     return randomNumber
 }
 
 
-function chipsWager() {
 
-    startEl.hidden = false;
-    newEl.hidden = false;
-    standEl.hidden = false;
-    
+function chipsWager() {
+    if (bet.value > Number(bet.getAttribute("max")) || bet.value < Number(bet.getAttribute("min"))) {
+        bet.setAttribute("color", "red")
+        console.log("Bet value invalid: Please select amount from 5-200, or total chip amount remaining.")
+    } else {
+        bet.setAttribute("color", "white")
+        startEl.hidden = false;
+        blackJack = bet.value * .5;
+        chipsEl.hidden = true;
+        bet.hidden = true;
+        playerEl.textContent += "  |  " + "Bet: " + bet.value
+        document.querySelectorAll("#hand img").forEach((element) => element.remove())
+        document.querySelectorAll("#handDealer img").forEach((element) => element.remove())
+        sumEl.textContent = "Sum: "
+        sumDealerEl.textContent = "Sum: "
+    }
 }
 
 function sumUp(sum, x) {
@@ -112,6 +124,7 @@ function sumUp(sum, x) {
         if(sum >= 11) {
             sum += 1
         } else {
+            hasAce = true
             sum += 11
         }
     } else {
@@ -126,31 +139,23 @@ function startGame() {
     isAlive = true
     let firstCard = getRandomCard()
     let secondCard = getRandomCard()
-    console.log(firstCard)
-    console.log(secondCard)
     cards = [firstCard, secondCard]
-    // sum = firstCard%13 + secondCard%13
-    console.log(sum)
     sum = sumUp(sum, firstCard)
-    console.log(sum)
     sum = sumUp(sum, secondCard)
-    console.log(sum)
     let firstDealerCard = getRandomCard() 
     dealerCards = [firstDealerCard]
-    // sumDealer = firstDealerCard
     sumDealer = sumUp(sumDealer, firstDealerCard)
+    startEl.hidden = true
+    newEl.hidden = false;
+    standEl.hidden = false;
     renderGame()
 
-    startEl.textContent = "START GAME"
+    startEl.textContent = "DEAL"
 
 }
 
 function renderGame() {
     document.querySelectorAll("#hand img").forEach((element) => element.remove())
-    
-    // for (let i = 0; i < cards.length; i++) {
-    //     cardsEl.textContent += cards[i]%13 + " "
-    // }
     for (let i = 0; i < cards.length; i++) {
         let img = document.createElement('img');
         img.src = deck[cards[i]];
@@ -158,7 +163,6 @@ function renderGame() {
 
     }
     document.querySelectorAll("#handDealer img").forEach((element) => element.remove())
-    
     for (let i = 0; i < dealerCards.length; i++) {
         let img = document.createElement('img');
         img.src = deck[dealerCards[i]];
@@ -169,29 +173,25 @@ function renderGame() {
     sumEl.textContent = "Sum: " + sum
     sumDealerEl.textContent = "Sum: " + sumDealer
     if (sum <= 20) {
-        message = "Do you want to draw a new card? 😁"
+        message = "Would you like to draw a card, or stand? 😁"
 
     } else if (sum === 21) {
-        message = "Wohoo! You've got Blackjack! 🥳 Select a new wager amount to begin next round."
-        isAlive= false;
-        startEl.hidden = true;
-        newEl.hidden = true;
-        standEl.hidden = true;
-        player.chips = player.chips + Number(quantity.value)
-        console.log(player.chips)
+        message = "Wohoo! You've got Blackjack! Select a new wager amount to begin the next deal."
+        endRound()
+        player.chips = player.chips + Number(bet.value) +blackJack
+        playerEl.textContent = player.name + ": $" + player.chips 
+        startEl.textContent = "REDEAL"
+    } else if (hasAce === false) {
+        message = "Busted! You lose this round! Select a new wager amount to begin the next deal."
+        endRound()
+        player.chips = player.chips - Number(bet.value)
         playerEl.textContent = player.name + ": $" + player.chips
-        startEl.textContent = "RESTART GAME"
-    } else {
-        message = "Busted! You lose this round! 😭 Select a new wager amount to begin next round."
-        isAlive = false
-        startEl.hidden = true;
-        newEl.hidden = true;
-        standEl.hidden = true;
-        player.chips = player.chips - Number(quantity.value)
-        console.log(player.chips)
-        playerEl.textContent = player.name + ": $" + player.chips
-        startEl.textContent = "RESTART GAME"
+        startEl.textContent = "REDEAL"
         
+    } else if (hasAce === true) {
+        sum -= 10
+        hasAce = false
+        sumEl.textContent = "Sum: " + sum    
     }
 
 
@@ -202,18 +202,11 @@ function renderGame() {
 function newCard() {
     if (isAlive === true) {
         let card = getRandomCard()
-        console.log(card)
-        // sum += card%13
         sum = sumUp(sum, card)
-        console.log(sum)
         cards.push(card)
-        console.log(cards)
         renderGame()
     }
 }
-
-
-
 
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -223,45 +216,52 @@ async function stand() {
             let card = getRandomCard()
             sumDealer = sumUp(sumDealer, card)
             dealerCards.push(card)
-            // cardsDealerEl.textContent = cardsDealerEl.textContent + " " + card
             renderGame();
-            // sumDealerEl.textContent = "Sum: " + sumDealer
             await sleep(1000)
-            }
+        }
         if (sumDealer > 21) {
             messageDealer = "Dealer BUSTS! Nice win!"
-            startEl.hidden = true;
-            newEl.hidden = true;
-            standEl.hidden = true;
-            player.chips = player.chips + Number(quantity.value)
+            endRound()
+            player.chips = player.chips + Number(bet.value)
         }
         else if (sumDealer > sum && sumDealer <=21) {
-            messageDealer = "I won this round! Please place your wager to play the next round." 
-            startEl.hidden = true;
-            newEl.hidden = true;
-            standEl.hidden = true;
-            player.chips = player.chips - Number(quantity.value)
+            messageDealer = "Dealer won this round! Please place your wager to play the next round." 
+            endRound()
+            player.chips = player.chips - Number(bet.value)
         }
 
         else if (sumDealer < sum) {
             messageDealer = "Congrats! You won this round!"
-            startEl.hidden = true;
-            newEl.hidden = true;
-            standEl.hidden = true;
-            player.chips = player.chips + Number(quantity.value)
+            endRound()
+            player.chips = player.chips + Number(bet.value)
         }
         
         else if (sumDealer === sum) {
-            messageDealer = "We TIED, however, I still WIN!"
-            startEl.hidden = true;
-            newEl.hidden = true;
-            standEl.hidden = true;
-            player.chips = player.chips - Number(quantity.value)
+            messageDealer = "We TIED, this round is a push!"
+            endRound()
+            player.chips = player.chips 
         }
 
         messageEl.textContent = messageDealer
         playerEl.textContent = player.name + ": $" + player.chips
     }
+
     
+function endRound() {
+    isAlive = false
+    startEl.hidden = true;
+    newEl.hidden = true;
+    standEl.hidden = true;
+    chipsEl.hidden = false;
+    quantity.hidden = false;
+    playerEl.textContent = player.name + ": $" + player.chips
+    console.log(bet.getAttribute("max"))
+    if(player.chips < 200) {
+        bet.setAttribute("max", player.chips)
+    console.log(bet.getAttribute("max"))
+    } else {
+        bet.setAttribute("max", 200)
+    }
+}
 
 
