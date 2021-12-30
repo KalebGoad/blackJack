@@ -98,20 +98,20 @@ function getRandomCard() {
 }
 
 function colorToggle() {
-    bet.setAttribute("style", "color: black")
-    
-    // NEEDS WORK, UNABLE TO CHANGE VALUE TO EMPTY 
-    // bet.setAttribute("textContent", "")
-    // bet.removeAttribute("value")
+    if (bet.getAttribute("class") == "input-error") {
+        bet.setAttribute("class", "")
+        bet.value = ""
+        console.log("removed class ", bet.getAttribute("class"))
+    }
 }
 
 function chipsWager() {
     if (bet.value > Number(bet.getAttribute("max")) || bet.value < Number(bet.getAttribute("min"))) {
-        bet.setAttribute("style", "color: red") 
+        bet.setAttribute("class", "input-error") 
         console.log("Invalid wager: Please amount between 5-200.")
         
     } else {
-        bet.setAttribute("style", "color: black")
+        bet.setAttribute("class", "")
         startEl.hidden = false;
         blackJack = bet.value * .5;
         chipsEl.hidden = true;
