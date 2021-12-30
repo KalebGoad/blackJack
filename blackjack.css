@@ -27,7 +27,7 @@ h1 {
     padding: 10px;
     background-color: rgb(132, 244, 248);
     margin: 5px;
-    margin-bottom: 0px;
+    margin-bottom: 4px;
     margin-top: 0px;
     border: 5px;
     border-style: outset solid;
@@ -40,7 +40,7 @@ h1 {
     padding: 10px;
     background-color: rgb(216, 218, 112);
     margin: 5px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     margin-top: 0px;
     border: 5px;
     border-style: outset solid;
@@ -56,6 +56,7 @@ h1 {
 #message-el {
     font-style: italic;
     font-size: 24px;
+    margin: 0px;
 }
 #start-el,
 #new-el,
@@ -78,20 +79,21 @@ h1 {
 }
 
 #chips-el:hover {
-    color: #8a0803b6;
-    box-shadow: 0px 2px 0px 0px #222121, inset -1px -3px 6px 1px #515151;
+    box-shadow: 0px 3px 0px 0px #222121, inset -1px -3px 8px 1px #515151;
+    color: rgb(49, 84, 240);
 
 }
 
 #chips-el:active {
-    color: #8a0803b6;
+    transform: translate(-1px, 1px);
+    box-shadow: none;
+    color: rgb(49, 84, 240);
     background-color: #ecb677ee;
-    box-shadow: 0px 0px 0px 0px #222121, inset -1px -3px 2px 1px #515151;
 
 }
 
 #start-el:hover {
-    box-shadow: 0px 3px 0px 0px #222121, inset -1px -3px 10px 1px #515151;
+    box-shadow: 0px 3px 0px 0px #222121, inset -1px -3px 8px 1px #515151;
     color: rgb(49, 84, 240);
 }
 
@@ -103,19 +105,23 @@ h1 {
 }
 
 #new-el {
-    background: rgb(219, 221, 243);
-    color:rgb(235, 8, 8);
+    background: goldenrod;
+    color:rgb(156, 7, 7);
+    
 }
 
 #new-el:hover {
-    box-shadow: 0px 2px 0px 0px #222121, inset -1px -3px 8px 1px #515151;
-    color: rgb(156, 5, 5);
-    opacity: .9;
+    box-shadow: 0px 3px 0px 0px #222121, inset -1px -3px 8px 1px #515151;
+    color: rgb(49, 84, 240);
 }
 
 #new-el:active {
+    transform: translate(-1px, 1px);
     box-shadow: none;
-    background-color: #ecb677ee;}
+    color: rgb(49, 84, 240);
+    background-color: #ecb677ee;
+}
+
 
 #stand-el:hover {
     box-shadow: 0px 2px 0px 0px #222121, inset -1px -3px 8px 1px #515151;
@@ -123,8 +129,9 @@ h1 {
 }
 
 #stand-el:active {
+    transform: translate(-1px, 1px);
     box-shadow: none;
-    color: rgb(102, 5, 141);
+    color:#870792;
     background-color: #ecb677ee;
 }
 

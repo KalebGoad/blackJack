@@ -107,8 +107,9 @@ function colorToggle() {
 
 function chipsWager() {
     if (bet.value > Number(bet.getAttribute("max")) || bet.value < Number(bet.getAttribute("min"))) {
-        bet.setAttribute("style", "color: red")
-        console.log("Bet value invalid: Please select amount from 5-200, or total chip amount remaining.")
+        bet.setAttribute("style", "color: red") 
+        console.log("Invalid wager: Please amount between 5-200.")
+        
     } else {
         bet.setAttribute("style", "color: black")
         startEl.hidden = false;
@@ -180,10 +181,10 @@ function renderGame() {
     sumEl.textContent = "Sum: " + sum
     sumDealerEl.textContent = "Sum: " + sumDealer
     if (sum <= 20) {
-        message = "Would you like to draw a card, or stand? 😁"
+        message = "Dealer: Would you like to Hit for a card, or Stand?"
 
     } else if (sum === 21) {
-        message = "Wohoo! You've got Blackjack! Select a new wager amount to begin the next deal."
+        message = "Wohoo! You've got Blackjack! Please select a new wager amount to begin the next deal."
         
         player.chips = player.chips + Number(bet.value) +blackJack
         endRound()
@@ -229,7 +230,7 @@ async function stand() {
                 dealerAce = false
                 sumDealerEl.textContent = "Sum: " + sum       
             }
-            await sleep(1000)
+            await sleep(1200)
         }
         if (sumDealer > 21) {
             messageDealer = "Dealer BUSTS! Nice win!"
@@ -239,6 +240,12 @@ async function stand() {
         }
         else if (sumDealer > sum && sumDealer <=21) {
             messageDealer = "Dealer won this round! Please place your wager to play the next round." 
+            
+            player.chips = player.chips - Number(bet.value)
+        }
+
+        else if (sumDealer === 21) {
+            messageDealer = "Dealer has Blackjack! Please place your wager to play the next round." 
             
             player.chips = player.chips - Number(bet.value)
         }
