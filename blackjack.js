@@ -99,6 +99,10 @@ function getRandomCard() {
 
 function colorToggle() {
     bet.setAttribute("style", "color: black")
+    
+    // NEEDS WORK, UNABLE TO CHANGE VALUE TO EMPTY 
+    // bet.setAttribute("textContent", "")
+    // bet.removeAttribute("value")
 }
 
 function chipsWager() {
