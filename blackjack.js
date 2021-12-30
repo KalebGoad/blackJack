@@ -112,7 +112,7 @@ function chipsWager() {
     }
     if (bet.value > Number(bet.getAttribute("max")) || bet.value < Number(bet.getAttribute("min"))) {
         bet.setAttribute("class", "input-error") 
-        console.log("Invalid wager: Please amount between 5-200.")
+        console.log("Invalid wager:", bet.value, "\n Please wager amount between 5-200 or chip total.")
         
     } else {
         bet.setAttribute("class", "")
@@ -189,15 +189,11 @@ function renderGame() {
 
     } else if (sum === 21) {
         message = "Wohoo! You've got Blackjack! Please select a new wager amount to begin the next deal."
-        // player.chips = player.chips + Number(bet.value) +blackJack
         chipChange(true, true)
-        // .then(funBlackJack())
         .then(endRound())
         startEl.textContent = "REDEAL"
     } else if (hasAce === false) {
         message = "Busted! You lose this round! Select a new wager amount to begin the next deal."
-        
-        // player.chips = player.chips - Number(bet.value)
         chipChange(false, false)
         .then(endRound())
         startEl.textContent = "REDEAL"
@@ -240,29 +236,21 @@ async function stand() {
         }
         if (sumDealer > 21) {
             messageDealer = "Dealer BUSTS! Nice win!"
-            
-            // player.chips = player.chips + Number(bet.value)
             chipChange(true, false)
             
         }
         else if (sumDealer > sum && sumDealer <=21) {
             messageDealer = "Dealer won this round! Please place your wager to play the next round." 
-            
-            // player.chips = player.chips - Number(bet.value)
             chipChange(false, false)
         }
 
         else if (sumDealer === 21) {
             messageDealer = "Dealer has Blackjack! Please place your wager to play the next round." 
-            
-            // player.chips = player.chips - Number(bet.value)
             chipChange(false, false)
         }
 
         else if (sumDealer < sum) {
             messageDealer = "Congrats! You won this round!"
-            
-            // player.chips = player.chips + Number(bet.value)
             chipChange(true, false)
         }
         
@@ -286,20 +274,10 @@ async function endRound() {
     standEl.hidden = true;
     chipsEl.hidden = false;
     bet.hidden = false;
-    // playerEl.textContent = player.name + ": $" + player.chips
-    // console.log(bet.getAttribute("max"), " before set")
-    // console.log(player.chips, typeof(player.chips))
-    // if(player.chips < 200) {
-    //     bet.setAttribute("max", player.chips)
-    // console.log(bet.getAttribute("max"), " after set")
-    // } else {
-    //     bet.setAttribute("max", 200)
-    // }
 }
 
 async function chipChange(isWin, isBlackJack) {
     let chips = player.chips
-    console.log("chipsChange: ", isWin)
     if (isWin) {
         while (player.chips < chips + Number(bet.value)) {
             await sleep(50)
