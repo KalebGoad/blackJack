@@ -149,3 +149,7 @@ button {
     margin-top: 2px;
     margin-bottom: 2px;
 }
+
+.input-error {
+    color: red
+}

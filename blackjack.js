@@ -98,22 +98,26 @@ function getRandomCard() {
 }
 
 function colorToggle() {
-    bet.setAttribute("style", "color: black")
-    
-    // NEEDS WORK, UNABLE TO CHANGE VALUE TO EMPTY 
-    // bet.setAttribute("textContent", "")
-    // bet.removeAttribute("value")
+    if (bet.getAttribute("class") == "input-error") {
+        bet.setAttribute("class", "")
+        bet.value = ""
+    }
 }
 
 function chipsWager() {
+    if(player.chips < 200) {
+        bet.setAttribute("max", player.chips)
+    } else {
+        bet.setAttribute("max", 200)
+    }
     if (bet.value > Number(bet.getAttribute("max")) || bet.value < Number(bet.getAttribute("min"))) {
-        bet.setAttribute("style", "color: red") 
-        console.log("Invalid wager: Please amount between 5-200.")
+        bet.setAttribute("class", "input-error") 
+        console.log("Invalid wager:", bet.value, "\n Please wager amount between 5-200 or chip total.")
         
     } else {
-        bet.setAttribute("style", "color: black")
+        bet.setAttribute("class", "")
         startEl.hidden = false;
-        blackJack = bet.value * .5;
+        blackJack = Number(bet.value) * .5;
         chipsEl.hidden = true;
         bet.hidden = true;
         playerEl.textContent += "  |  " + "Bet: " + bet.value
@@ -185,15 +189,13 @@ function renderGame() {
 
     } else if (sum === 21) {
         message = "Wohoo! You've got Blackjack! Please select a new wager amount to begin the next deal."
-        
-        player.chips = player.chips + Number(bet.value) +blackJack
-        endRound()
+        chipChange(true, true)
+        .then(endRound())
         startEl.textContent = "REDEAL"
     } else if (hasAce === false) {
         message = "Busted! You lose this round! Select a new wager amount to begin the next deal."
-        
-        player.chips = player.chips - Number(bet.value)
-        endRound()
+        chipChange(false, false)
+        .then(endRound())
         startEl.textContent = "REDEAL"
         
     } else if (hasAce === true) {
@@ -234,26 +236,22 @@ async function stand() {
         }
         if (sumDealer > 21) {
             messageDealer = "Dealer BUSTS! Nice win!"
-            
-            player.chips = player.chips + Number(bet.value)
+            chipChange(true, false)
             
         }
         else if (sumDealer > sum && sumDealer <=21) {
             messageDealer = "Dealer won this round! Please place your wager to play the next round." 
-            
-            player.chips = player.chips - Number(bet.value)
+            chipChange(false, false)
         }
 
         else if (sumDealer === 21) {
             messageDealer = "Dealer has Blackjack! Please place your wager to play the next round." 
-            
-            player.chips = player.chips - Number(bet.value)
+            chipChange(false, false)
         }
 
         else if (sumDealer < sum) {
             messageDealer = "Congrats! You won this round!"
-            
-            player.chips = player.chips + Number(bet.value)
+            chipChange(true, false)
         }
         
         else if (sumDealer === sum) {
@@ -266,7 +264,8 @@ async function stand() {
     }
 
     
-function endRound() {
+async function endRound() {
+    await sleep(1000)
     isAlive = false
     hasAce = false
     dealerAce = false
@@ -275,15 +274,29 @@ function endRound() {
     standEl.hidden = true;
     chipsEl.hidden = false;
     bet.hidden = false;
-    playerEl.textContent = player.name + ": $" + player.chips
-    console.log(bet.getAttribute("max"), " before set")
-    console.log(player.chips, typeof(player.chips))
-    if(player.chips < 200) {
-        bet.setAttribute("max", player.chips)
-    console.log(bet.getAttribute("max"), " after set")
+}
+
+async function chipChange(isWin, isBlackJack) {
+    let chips = player.chips
+    if (isWin) {
+        while (player.chips < chips + Number(bet.value)) {
+            await sleep(50)
+            player.chips = player.chips + 1
+            playerEl.textContent = player.name + ": $" + player.chips
+        }
+        if (isBlackJack) {
+            funBlackJack()
+        }
     } else {
-        bet.setAttribute("max", 200)
+        while (player.chips > chips - Number(bet.value)) {
+            await sleep(50)
+            player.chips = player.chips - 1
+            playerEl.textContent = player.name + ": $" + player.chips
+        }
     }
 }
 
-
+function funBlackJack() {
+    player.chips += blackJack
+    playerEl.textContent = player.name + ": $" + player.chips
+}
