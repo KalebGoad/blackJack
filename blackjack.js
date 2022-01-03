@@ -59,7 +59,7 @@ const deck = {
     52 : "./assets/king_of_diamonds.png"
 }
 
-// import { deck } from "./cards.js";
+
 
 let cards = []
 let dealerCards = []
@@ -278,20 +278,23 @@ async function endRound() {
 
 async function chipChange(isWin, isBlackJack) {
     let chips = player.chips
+    let playerChips = player.chips
     if (isWin) {
-        while (player.chips < chips + Number(bet.value)) {
-            await sleep(50)
-            player.chips = player.chips + 1
-            playerEl.textContent = player.name + ": $" + player.chips
+        player.chips = player.chips + Number(bet.value)
+        while (playerChips < chips + Number(bet.value)) {
+            await sleep(5)
+            playerChips = playerChips + 1
+            playerEl.textContent = player.name + ": $" + playerChips
         }
         if (isBlackJack) {
             funBlackJack()
         }
     } else {
-        while (player.chips > chips - Number(bet.value)) {
-            await sleep(50)
-            player.chips = player.chips - 1
-            playerEl.textContent = player.name + ": $" + player.chips
+        player.chips = player.chips - Number(bet.value)
+        while (playerChips > chips - Number(bet.value)) {
+            await sleep(5)
+            playerChips = playerChips - 1
+            playerEl.textContent = player.name + ": $" + playerChips
         }
     }
 }

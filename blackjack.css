@@ -21,6 +21,8 @@ h1 {
     color: #daa520;
 }
 
+
+
 #hand img {
     width: 120px;
     height: 110px;
@@ -32,8 +34,11 @@ h1 {
     border: 5px;
     border-style: outset solid;
     border-radius: 7px;
-    
 }
+
+
+
+
 #handDealer img {
     width: 120px;
     height: 110px;
