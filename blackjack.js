@@ -84,12 +84,12 @@ let hasAce = false;
 let dealerAce = false;
 
 
+
 startEl.hidden = true;
 newEl.hidden = true;
 standEl.hidden = true;
 
 playerEl.textContent = player.name + ": $" + player.chips
-
 
 
 function getRandomCard() {
